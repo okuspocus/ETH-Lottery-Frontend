@@ -147,8 +147,11 @@ contract Lottery is Ownable {
 
     /// @notice Burns `amount` tokens and give the equivalent ETH back to user
     function returnTokens(uint256 amount) external {
+        require(
+        paymentToken.approve(address(this), amount),
+        "Failed to approve spending of tokens"
+        );
         paymentToken.burnFrom(msg.sender, amount);
-        payable(msg.sender).transfer(amount);
 
     }
 }
